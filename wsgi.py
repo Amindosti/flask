@@ -41,3 +41,28 @@ def name_search():
             return person
 
     return ({"message": "Person not found"}, 400)
+
+@app.route("/count")
+def count():
+    try:
+        return {"data count": len(data)}, 200
+    except NameError:
+        return {"message": "data not defined"}, 500
+    
+
+@app.route("/person/<uuid:id>")
+def find_by_uuid(id):
+    for person in data:
+        if person["id"] == str(id):
+            return person
+    return {"message": "person not found"}, 404
+
+
+@app.route("/person/<uuid:id>", methods=['DELETE'])
+def delete_by_uuid(id):
+    for person in data:
+        if person["id"] == str(id):
+            data.remove(person)
+            return {"message":f"{id}"}, 200
+
+    return {"message": "person not found"}, 400
