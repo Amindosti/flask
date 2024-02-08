@@ -66,3 +66,16 @@ def delete_by_uuid(id):
             return {"message":f"{id}"}, 200
 
     return {"message": "person not found"}, 400
+
+@app.route("/person", methods=['POST'])
+def add_by_uuid():
+    new_person = request.json
+    if not new_person:
+        return {"message": "invalid input parameter"}, 422
+    try:
+        data.append(new_person)
+        
+    except NameError:
+        return {"message": "data not found"}, 500
+
+    return {"message": f"{new_person['id']} created"}, 200
